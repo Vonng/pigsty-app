@@ -1,8 +1,8 @@
 #==============================================================#
 # File      :   Makefile
-# Ctime     :   2020-11-03
+# Ctime     :   2021-10-29
 # Mtime     :   2022-03-30
-# Desc      :   Makefile shortcuts
+# Desc      :   Makefile shortcuts for worktime app
 # Path      :   Makefile
 # Copyright (C) 2019-2022 Ruohang Feng
 #==============================================================#
@@ -14,13 +14,10 @@ GRAFANA_PASSWORD?=pigsty
 GRAFANA_ENDPOINT?=http://10.10.10.10:3000
 
 #-----------------------------#
-# entrypoint
+# entry
 #-----------------------------#
-default: install
-all: install
-
-install: sql ui data
-
+default: all
+all: sql ui data
 
 #-----------------------------#
 # install
@@ -28,19 +25,24 @@ install: sql ui data
 ui:
 	cd ui && ./grafana.py load
 
-sql:
-	psql ${METADB_URL-''} -f sql/000_base.sql    # baseline schema
+sql: ddl
 
 data: load
 
 #-----------------------------#
-# data
+# database
 #-----------------------------#
+ddl:
+	psql $(METADB_URL) -f sql/000_base.sql
+
 load: clean
-	cat data/dbeng_trend.csv | psql ${METADB_URL} -c "COPY app.dbeng_trend FROM STDIN CSV HEADER;";
+	cat data/worktime.csv | psql $(METADB_URL) -c 'COPY app.worktime FROM STDIN CSV HEADER'
+
+dump:
+	psql $(METADB_URL) -c 'COPY (SELECT * FROM app.worktime ORDER BY id) TO STDOUT CSV HEADER' > data/worktime.csv
 
 clean:
-	psql ${METADB_URL} -c 'TRUNCATE app.dbeng_trend;';
+	psql $(METADB_URL) -c 'TRUNCATE app.worktime CASCADE;'
 
 
-.PHONY: default all install ui sql data-
+.PHONY: default all ui sql ddl load dump clean
