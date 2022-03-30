@@ -9,8 +9,8 @@ dist/
 isd/bin/*.tar.gz
 isd/bin/isdh
 isd/bin/isdd
-isd/data
-covid/data
+#isd/data
+#covid/data
 
 #########################################################
 # environment

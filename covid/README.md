@@ -12,11 +12,15 @@ make            # if local-data available
 make all        # if local-data not available, download from internet
 ```
 
-
-## Update
+Subtasks:
 
 ```bash
 make reload     # download latest data and pour it again
+make ui         # install grafana dashboards
+make sql        # install database schemas
+make download   # download latest data
+make load       # load downloaded data into database
+make reload     # download latest data and pour it into database
 ```
 
 

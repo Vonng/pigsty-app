@@ -1,6 +1,6 @@
 #==============================================================#
 # File      :   Makefile
-# Ctime     :   2020-11-03
+# Ctime     :   2021-10-10
 # Mtime     :   2022-03-30
 # Desc      :   Makefile shortcuts
 # Path      :   Makefile
@@ -14,16 +14,10 @@ GRAFANA_PASSWORD?=pigsty
 GRAFANA_ENDPOINT?=http://10.10.10.10:3000
 
 #-----------------------------#
-# entrypoint
+# entry
 #-----------------------------#
-default: install
-
-# if local data available, use `make install`
-install: sql ui data-local
-
-# if local data unavailable, use `make all` to download
-all: sql ui data
-
+default: all
+all: ui sql data
 
 #-----------------------------#
 # install
@@ -34,25 +28,16 @@ ui:
 sql:
 	psql ${METADB_URL-''} -f sql/000_base.sql    # baseline schema
 
-data-local: load
-data: reload
-
+data: load
 
 #-----------------------------#
 # data
 #-----------------------------#
-download:
-	mkdir -p data/
-	curl -fSL https://covid19.who.int/WHO-COVID-19-global-data.csv       -o data/history.csv
-
+# load example data
 load: clean
-	cat data/history.csv | psql ${METADB_URL} -c "COPY covid.country_history FROM STDIN CSV HEADER;";
+	cat data/example.ndjson | psql ${METADB_URL} -c "COPY app.t_privacy_log FROM STDIN; REFRESH MATERIALIZED VIEW app.privacy_log;";
 
 clean:
 	psql ${METADB_URL} -c 'TRUNCATE covid.country_history, covid.country_latest;';
 
-reload: download load
-
-
-
-.PHONY: default install all ui sql data-local data-fetch download load clean reload
+.PHONY: default install all ui sql data load clean
