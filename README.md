@@ -1,11 +1,10 @@
 # Pigsty App
 
-These are some applications that can runs on pigsty environment.
+These are some example applications that can runs on [pigsty](https://github.com/Vonng/pigsty) environment.
 
-If you have trouble downloading data from Github and other original datasource. 
-Download `app.tgz` from Github release page which includes basic data
+Download `app.tgz` from GitHub release page: [v1.4.0](https://github.com/Vonng/pigsty-app/releases/download/v1.4.0/app.tgz)
 
-You can install most application by `cd <app> && make all`
+You can install applications by `cd <app> && make`. Check [demo](http://demo.pigsty.cc) for live applications. 
 
 
 ### [covid](covid/)
@@ -13,6 +12,9 @@ You can install most application by `cd <app> && make all`
 * Visualize covid-19 data by country
 * new_cases new_death cum_cases cum_death map via echarts
 
+```bash
+cd covid; make
+```
 
 ### [isd](isd/)
 
@@ -20,19 +22,30 @@ You can install most application by `cd <app> && make all`
 * Download, Parse, Visualize Integrated Surface Dataset.
 * Including 30000 meteorology station, sub-hourly observation records, from 1900-2020.
 
+```bash
+cd isd; make
+```
 
 ### [dbeng](dbeng/)
 
 * DB-Engine Trending & Prediction, Simple application
-* 数据库引擎流行度排行榜
+
+```bash
+cd dbeng; make
+```
 
 ### [worktime](worktime/)
 
-* 统计各行业，各公司工作时间与工作条件。
+* Working condition & Shift time for China company
 
+```bash
+cd worktime; make
+```
 
 ### [applog](applog/)
 
-* Apple 应用隐私日志
+* Apple Privacy Log
 
-哦吼300人了，不容易啊。顺便一提，PG社区还有一个很活跃的PostgreSQL学徒群 群主 @灿 ，经常分享一些高质量PG文章，有兴趣也可以加Ta哦
+```bash
+cd applog; make
+```

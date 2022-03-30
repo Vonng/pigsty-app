@@ -4,7 +4,7 @@
 # Mtime     :   2022-03-30
 # Desc      :   Makefile shortcuts
 # Path      :   Makefile
-# Copyright (C) 2019-2020 Ruohang Feng
+# Copyright (C) 2019-2022 Ruohang Feng
 #==============================================================#
 
 # pigsty environment
